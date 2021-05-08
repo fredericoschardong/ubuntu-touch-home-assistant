@@ -19,7 +19,7 @@ From the desktop connect through adb or ssh to the device:
 root@ubuntu-phablet:/# apt-get install software-properties-common
 root@ubuntu-phablet:/# add-apt-repository ppa:deadsnakes/ppa
 root@ubuntu-phablet:/# apt update
-root@ubuntu-phablet:/# apt install python3.7 python3.7-dev autoconf automake libtool
+root@ubuntu-phablet:/# apt install python3.7* autoconf automake libtool
 root@ubuntu-phablet:/# export CRYPTOGRAPHY_ALLOW_OPENSSL_102=1
 ```
 
