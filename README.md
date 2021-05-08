@@ -40,8 +40,6 @@ First run will take 10-15 minutes.
 Point the Nexus 4 browser to:  
 `http://localhost:8123`
 
-![HomeAssistant@Nexus](screenshot.jpg)
-
 Configuration files are stored in /home/phablet/.cache/libertine-container/hass/rootfs/home/phablet/.homeassistant/.
 To use scp (or WinSCP) to access this folder from the desktop, configure ssh:  
 `user@ubuntu-desktop$ ssh-keygen`  
