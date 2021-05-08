@@ -1,42 +1,43 @@
-# Home Assistant on Nexus 5
+# Home Assistant on Nexus 4 and others
 
-Install Ubuntu Touch
---------------------
-On a linux desktop get the UBports installer:
+I wasn't able to get the latest [cryptography](https://pypi.org/project/cryptography/) package installed on Ubuntu 16.04 (Ubuntu Touch latest version is still 16.04). Therefore, I opted for Python 3.7 and the [latest version of home assistant that supports it](https://pypi.org/project/homeassistant/2021.1.5/).
 
-`user@ubuntu-desktop$ snap install ubports-installer`  
-... and then run it  
-`user@ubuntu-desktop$ ubports-installer`  
-See [alternative methods](https://github.com/ubports/ubports-installer/) if snap is not an option.
+## Install Ubuntu Touch
+Install [Ubuntu Touch](https://github.com/ubports/ubports-installer/). For my Nexus 4 I had to select the devel channel.
 
-Once UT is running on the device, go in Settings => About and activate Developer Mode. You will need to set a passcode for Developer Mode
+Once UT is running on the device, go in Settings => About and activate Developer Mode. You will need to set a passcode for Developer Mode.
 
 From the desktop connect through adb or ssh to the device:  
 `user@ubuntu-desktop$ adb shell`  
 
-Create a container
-------------------
+## Create a container
 `phablet@ubuntu-phablet:~$ libertine-container-manager create -i hass`  
 
 
-Install dependencies
-------------
-`phablet@ubuntu-phablet:~$ libertine-container-manager exec -i hass -c bash`  
-`root@ubuntu-phablet:/# apt-get install python3-dev python3-pip python3-venv`  
+## Install dependencies
+```phablet@ubuntu-phablet:~$ libertine-container-manager exec -i hass -c bash
+root@ubuntu-phablet:/# apt-get install software-properties-common
+root@ubuntu-phablet:/# add-apt-repository ppa:deadsnakes/ppa
+root@ubuntu-phablet:/# apt update
+root@ubuntu-phablet:/# apt install python3.7 python3.7-dev autoconf automake libtool
+root@ubuntu-phablet:/# export CRYPTOGRAPHY_ALLOW_OPENSSL_102=1
+```
 
-Install Home Assistant
----------------
-`root@ubuntu-phablet:/# python3 -m venv homeassistant`
-`root@ubuntu-phablet:/# cd homeassistant`
-`root@ubuntu-phablet:/# source bin/activate`
-`root@ubuntu-phablet:/# python3 -m pip install homeassistant==0.64.3`
+## Install Home Assistant
+```root@ubuntu-phablet:/# python3.7 -m venv homeassistant
+root@ubuntu-phablet:/# cd homeassistant
+root@ubuntu-phablet:/# source bin/activate
+root@ubuntu-phablet:/# python3.7 -m pip install -U pip
+root@ubuntu-phablet:/# python3.7 -m pip install pillow==7.2.0 --global-option="build_ext" --global-option="--disable-zlib" --global-option="--disable-jpeg"
+root@ubuntu-phablet:/# python3.7 -m pip install homeassistant
+```
 
-Start Home Assistant
+## Start Home Assistant
 
 Still in the virtual environment run:  
 `root@ubuntu-phablet:/# hass`
 First run will take 10-15 minutes.
-Point the Nexus 5 browser to:  
+Point the Nexus 4 browser to:  
 `http://localhost:8123`
 
 ![HomeAssistant@Nexus](screenshot.jpg)
